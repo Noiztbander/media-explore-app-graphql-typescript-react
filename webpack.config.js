@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-// const { CleanWebpackPlugin } = require ("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -26,6 +26,14 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.html$/,
+        use: "html-loader",
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
     ],
   },
   plugins: [
@@ -36,5 +44,6 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: "./build",
     }),
+    new MiniCssExtractPlugin(),
   ],
 };
